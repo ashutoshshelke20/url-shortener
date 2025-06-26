@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>URL Shortener</title>
+</head>
+<body>
+  <h2>Enter Long URL</h2>
+  <input id="url" type="text" placeholder="https://example.com" />
+  <button onclick="shorten()">Shorten</button>
+  <p id="result"></p>
+
+  <script>
+    async function shorten() {
+      const longUrl = document.getElementById('url').value;
+      const resultEl = document.getElementById('result');
+      resultEl.innerHTML = 'Please wait...';
+
+      try {
+        const res = await fetch('https://of707r5sw0.execute-api.eu-north-1.amazonaws.com/prod/shorten-url', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ longUrl })
+        });
+
+        if (!res.ok) {
+          throw new Error('Failed to shorten URL');
+        }
+
+        const data = await res.json();
+        resultEl.innerHTML = `<strong>Short URL:</strong> <a href="${data.shortUrl}" target="_blank">${data.shortUrl}</a>`;
+      } catch (error) {
+        resultEl.innerText = `Error: ${error.message}`;
+      }
+    }
+  </script>
+</body>
+</html>
