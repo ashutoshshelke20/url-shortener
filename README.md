@@ -7,7 +7,6 @@ A serverless application that converts long URLs into short ones using AWS.
 - API Gateway
 - DynamoDB
 - S3 (Frontend)
-- EC2 (Git Deployment)
 
 ## 🌐 Features
 - Shorten long URLs using a REST API
